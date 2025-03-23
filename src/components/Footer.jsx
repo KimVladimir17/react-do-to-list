@@ -1,23 +1,17 @@
-import "../assets/style.css/footer.css";
+import TasksFilter from "./TasksFilter";
 
-function Footer() {
+const Footer = () => {
+  const itemsLeft = 2;
+
   return (
-    <div className="footer">
-      <span className="todo-count">1 items left</span>
-      <ul className="filters">
-        <li>
-          <button className="selected">All</button>
-        </li>
-        <li>
-          <button>Active</button>
-        </li>
-        <li>
-          <button>Completed</button>
-        </li>
-      </ul>
+    <footer className="footer">
+      <span className="todo-count">
+        {itemsLeft} item{itemsLeft !== 1 ? "s" : ""} left
+      </span>
+      <TasksFilter />
       <button className="clear-completed">Clear completed</button>
-    </div>
+    </footer>
   );
-}
+};
 
 export default Footer;
