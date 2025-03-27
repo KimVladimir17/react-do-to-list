@@ -1,10 +1,17 @@
 import Task from "./Task";
 
-const TaskList = (props) => {
+const TaskList = ({ tasks, onUpdateTask, onDeleteTaskName, onStatusTask }) => {
   return (
     <ul className="todo-list">
-      {props.tasks.map((task) => (
-        <Task key={task.id} name={task.name} time={task.time} />
+      {tasks.map((task) => (
+        <Task
+          key={task.id}
+          task={task}
+          disabled={task.completed}
+          onUpdateTask={onUpdateTask}
+          onDeleteTaskName={onDeleteTaskName}
+          onStatusTask={onStatusTask}
+        />
       ))}
     </ul>
   );

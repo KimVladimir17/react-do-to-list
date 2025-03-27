@@ -1,15 +1,21 @@
-const TasksFilter = () => {
+const TasksFilter = ({ filter, onFilterChange }) => {
+  const buttons = [
+    { name: "All", filterValue: "all" },
+    { name: "Active", filterValue: "active" },
+    { name: "Completed", filterValue: "completed" },
+  ];
   return (
     <ul className="filters">
-      <li>
-        <button className="selected">All</button>
-      </li>
-      <li>
-        <button>Active</button>
-      </li>
-      <li>
-        <button>Completed</button>
-      </li>
+      {buttons.map(({ name, filterValue }) => (
+        <li key={filterValue}>
+          <button
+            className={filter === filterValue ? "selected" : ""}
+            onClick={() => onFilterChange({ filterValue })}
+          >
+            {name}
+          </button>
+        </li>
+      ))}
     </ul>
   );
 };

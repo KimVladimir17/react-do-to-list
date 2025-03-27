@@ -168,15 +168,11 @@ body {
     padding: 0;
 }
 
-.todo-list li.editing .edit {
+.todo-list li .edit {
     display: block;
     width: calc(100% - 43px);
     padding: 12px 16px;
     margin: 0 0 0 43px;
-}
-
-.todo-list li.editing .view {
-    display: none;
 }
 
 .todo-list li .toggle {
@@ -234,7 +230,7 @@ body {
     color: #4d4d4d;
 }
 
-.todo-list li.completed label .description {
+.todo-list li.completed {
     color: #cdcdcd;
     text-decoration: line-through;
 }
@@ -271,10 +267,6 @@ body {
 
 .todo-list li .icon-edit:after {
     content: '✎';
-}
-
-.todo-list li .edit {
-    display: none;
 }
 
 .todo-list li.editing:last-child {

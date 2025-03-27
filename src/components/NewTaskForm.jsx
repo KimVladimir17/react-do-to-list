@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const NewTaskForm = (props) => {
+const NewTaskForm = ({ onSaveTaskData }) => {
   const [inputName, setInputName] = useState("");
 
   const nameChangeHandler = (event) => {
@@ -8,14 +8,19 @@ const NewTaskForm = (props) => {
   };
 
   const submitHandler = (event) => {
+    // let now = new Date();
+    // let hours = now.getHours();
+    // let minutes = now.getMinutes();
     event.preventDefault();
     const taskData = {
       id: Math.random().toString(),
       name: inputName,
-      // time: time,
+      // time: `${hours}:${minutes}`,
+      status: "false",
+      completed: false,
     };
 
-    props.onSaveTaskDate(taskData);
+    onSaveTaskData(taskData);
 
     setInputName("");
   };
