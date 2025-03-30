@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import TaskList from "./components/TaskList";
 import NewTaskForm from "./components/NewTaskForm";
 import Footer from "./components/Footer";
@@ -28,7 +28,7 @@ const INITIAL_TASKS = [
 
 function App() {
   const [tasks, setTasks] = useState(INITIAL_TASKS);
-  const [filterTask, setFilterTask] = useState(["all"]);
+  const [filterTask, setFilterTask] = useState("all");
 
   const saveTaskDataHandler = (task) => {
     setTasks((prevTasks) => {
@@ -56,22 +56,22 @@ function App() {
     setTasks(
       tasks.map((task) => {
         if (task.id === id) {
-          return { ...task, completed: true };
+          return { ...task, completed: !task.completed };
         }
         return task;
       })
     );
   };
 
-  const filteredTasks = () => {
-    if (filterTask.filterValue === "active") {
+  const filteredTasks = useMemo(() => {
+    if (filterTask === "active") {
       return tasks.filter((task) => !task.completed);
-    } else if (filterTask.filterValue === "completed") {
+    } else if (filterTask === "completed") {
       return tasks.filter((task) => task.completed);
     } else {
       return tasks;
     }
-  };
+  }, [tasks, filterTask]);
 
   const clearCompleted = () => {
     setTasks(tasks.filter((task) => !task.completed));
@@ -85,7 +85,7 @@ function App() {
       </header>
       <section className="main">
         <TaskList
-          tasks={filteredTasks()}
+          tasks={filteredTasks}
           onUpdateTask={updateTask}
           onDeleteTaskName={deleteTaskName}
           onStatusTask={statusTask}

@@ -10,7 +10,7 @@ const TasksFilter = ({ filter, onFilterChange }) => {
         <li key={filterValue}>
           <button
             className={filter === filterValue ? "selected" : ""}
-            onClick={() => onFilterChange({ filterValue })}
+            onClick={() => onFilterChange(filterValue)}
           >
             {name}
           </button>
