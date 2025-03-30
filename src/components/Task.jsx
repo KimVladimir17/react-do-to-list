@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect, useRef } from "react";
 const Task = ({
   task,
   onUpdateTask,
@@ -9,6 +8,13 @@ const Task = ({
 }) => {
   const [inputEditName, setInputEditName] = useState(task.name);
   const [inputEditingName, setInputEditingName] = useState(false);
+  const editInputRef = useRef(null);
+
+  useEffect(() => {
+    if (inputEditingName) {
+      editInputRef.current.focus();
+    }
+  }, [inputEditingName]);
 
   const editTaskHandler = (e) => {
     setInputEditName(e.target.value);
@@ -20,6 +26,9 @@ const Task = ({
 
   const editTaskSubmitHandler = (e) => {
     e.preventDefault();
+    if (inputEditName.trim() === "") {
+      return;
+    }
     onUpdateTask(task.id, inputEditName);
     setInputEditingName(false);
   };
@@ -56,6 +65,8 @@ const Task = ({
             className="edit"
             value={inputEditName}
             onChange={editTaskHandler}
+            ref={editInputRef}
+            onBlur={editTaskSubmitHandler}
           />
         </form>
       )}

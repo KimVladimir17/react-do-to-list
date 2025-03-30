@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const NewTaskForm = ({ onSaveTaskData }) => {
   const [inputName, setInputName] = useState("");
@@ -11,9 +12,14 @@ const NewTaskForm = ({ onSaveTaskData }) => {
     // let now = new Date();
     // let hours = now.getHours();
     // let minutes = now.getMinutes();
+
     event.preventDefault();
+    if (inputName.trim() === "") {
+      return;
+    }
+
     const taskData = {
-      id: Math.random().toString(),
+      id: uuidv4(),
       name: inputName,
       // time: `${hours}:${minutes}`,
       status: "false",

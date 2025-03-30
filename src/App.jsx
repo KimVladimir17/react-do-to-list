@@ -3,22 +3,23 @@ import TaskList from "./components/TaskList";
 import NewTaskForm from "./components/NewTaskForm";
 import Footer from "./components/Footer";
 import "./App.css";
+import { v4 as uuidv4 } from "uuid";
 
 const INITIAL_TASKS = [
   {
-    id: Math.random().toString(),
+    id: uuidv4(),
     name: "Completed task",
     time: 17,
     completed: false,
   },
   {
-    id: Math.random().toString(),
+    id: uuidv4(),
     name: "Editing task",
     time: 5,
     completed: false,
   },
   {
-    id: Math.random().toString(),
+    id: uuidv4(),
     name: "Active task",
     time: 5,
     completed: false,
@@ -27,7 +28,7 @@ const INITIAL_TASKS = [
 
 function App() {
   const [tasks, setTasks] = useState(INITIAL_TASKS);
-  const [filterTask, setFilterTask] = useState("all");
+  const [filterTask, setFilterTask] = useState(["all"]);
 
   const saveTaskDataHandler = (task) => {
     setTasks((prevTasks) => {
@@ -72,6 +73,10 @@ function App() {
     }
   };
 
+  const clearCompleted = () => {
+    setTasks(tasks.filter((task) => !task.completed));
+  };
+
   return (
     <section className="todoapp">
       <header className="header">
@@ -91,6 +96,7 @@ function App() {
         tasks={tasks}
         filter={filterTask}
         onFilterChange={setFilterTask}
+        onClearCompleted={clearCompleted}
       />
     </section>
   );
