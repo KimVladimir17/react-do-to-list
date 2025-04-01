@@ -8,6 +8,7 @@ const Task = ({
 }) => {
   const [inputEditName, setInputEditName] = useState(task.name);
   const [inputEditingName, setInputEditingName] = useState(false);
+  const [originalName, setOriginalName] = useState(task.name);
   const editInputRef = useRef(null);
 
   useEffect(() => {
@@ -18,6 +19,7 @@ const Task = ({
 
   const editTaskHandler = (e) => {
     setInputEditName(e.target.value);
+    setOriginalName(task.name);
   };
 
   const editTaskNameHandler = () => {
@@ -26,11 +28,12 @@ const Task = ({
 
   const editTaskSubmitHandler = (e) => {
     e.preventDefault();
+    setInputEditingName(false);
     if (inputEditName.trim() === "") {
+      setInputEditName(originalName);
       return;
     }
     onUpdateTask(task.id, inputEditName);
-    setInputEditingName(false);
   };
 
   return (

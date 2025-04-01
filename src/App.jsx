@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import TaskList from "./components/TaskList";
 import NewTaskForm from "./components/NewTaskForm";
 import Footer from "./components/Footer";
@@ -29,6 +29,21 @@ const INITIAL_TASKS = [
 function App() {
   const [tasks, setTasks] = useState(INITIAL_TASKS);
   const [filterTask, setFilterTask] = useState("all");
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/todos")
+      .then((response) => response.json())
+      .then((data) => {
+        const firstTenTasks = data.slice(0, 7);
+        const transformedTasks = firstTenTasks.map((todo) => ({
+          id: todo.id.toString(),
+          name: todo.title,
+          completed: todo.completed,
+        }));
+        setTasks(transformedTasks);
+      })
+      .catch((error) => console.error("Error fetching tasks:", error));
+  }, []);
 
   const saveTaskDataHandler = (task) => {
     setTasks((prevTasks) => {
