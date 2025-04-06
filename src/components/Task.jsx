@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { formatDistanceToNow } from "date-fns";
 const Task = ({
   task,
   onUpdateTask,
@@ -7,15 +8,15 @@ const Task = ({
   disabled,
 }) => {
   const [inputEditName, setInputEditName] = useState(task.name);
-  const [inputEditingName, setInputEditingName] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [originalName, setOriginalName] = useState(task.name);
   const editInputRef = useRef(null);
 
   useEffect(() => {
-    if (inputEditingName) {
+    if (isEditing) {
       editInputRef.current.focus();
     }
-  }, [inputEditingName]);
+  }, [isEditing]);
 
   const editTaskHandler = (e) => {
     setInputEditName(e.target.value);
@@ -23,12 +24,12 @@ const Task = ({
   };
 
   const editTaskNameHandler = () => {
-    setInputEditingName(true);
+    setIsEditing(true);
   };
 
   const editTaskSubmitHandler = (e) => {
     e.preventDefault();
-    setInputEditingName(false);
+    setIsEditing(false);
     if (inputEditName.trim() === "") {
       setInputEditName(originalName);
       return;
@@ -36,9 +37,10 @@ const Task = ({
     onUpdateTask(task.id, inputEditName);
   };
 
+  const timeAgo = formatDistanceToNow(task.createdAt, { includeSeconds: true });
   return (
     <li className={task.completed ? "completed" : ""}>
-      {!inputEditingName && (
+      {!isEditing && (
         <div className="view">
           <input
             className="toggle"
@@ -48,7 +50,7 @@ const Task = ({
           ></input>
           <label>
             <span>{task.name}</span>
-            <span className="created">created {task.time} minutes ago</span>
+            <span className="created">created {timeAgo}</span>
           </label>
           <button
             className="icon icon-edit"
@@ -61,7 +63,7 @@ const Task = ({
           ></button>
         </div>
       )}
-      {inputEditingName && (
+      {isEditing && (
         <form onSubmit={editTaskSubmitHandler}>
           <input
             type="text"

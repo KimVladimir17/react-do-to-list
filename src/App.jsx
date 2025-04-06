@@ -9,19 +9,19 @@ const INITIAL_TASKS = [
   {
     id: uuidv4(),
     name: "Completed task",
-    time: 17,
+    createdAt: 17,
     completed: false,
   },
   {
     id: uuidv4(),
     name: "Editing task",
-    time: 5,
+    createdAt: 5,
     completed: false,
   },
   {
     id: uuidv4(),
     name: "Active task",
-    time: 5,
+    createdAt: 5,
     completed: false,
   },
 ];
@@ -39,6 +39,7 @@ function App() {
           id: todo.id.toString(),
           name: todo.title,
           completed: todo.completed,
+          createdAt: Date.now(),
         }));
         setTasks(transformedTasks);
       })
@@ -49,7 +50,6 @@ function App() {
     setTasks((prevTasks) => {
       return [task, ...prevTasks];
     });
-    console.log(tasks);
   };
 
   const updateTask = (id, newName) => {

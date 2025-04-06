@@ -19,6 +19,7 @@ const NewTaskForm = ({ onSaveTaskData }) => {
       name: inputName,
       // time: `${hours}:${minutes}`,
       completed: false,
+      createdAt: Date.now(),
     };
     onSaveTaskData(taskData);
     setInputName("");
