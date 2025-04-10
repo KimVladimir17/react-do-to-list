@@ -3,37 +3,22 @@ import TaskList from "./components/TaskList";
 import NewTaskForm from "./components/NewTaskForm";
 import Footer from "./components/Footer";
 import "./App.css";
-import { v4 as uuidv4 } from "uuid";
-
-const INITIAL_TASKS = [
-  {
-    id: uuidv4(),
-    name: "Completed task",
-    createdAt: 17,
-    completed: false,
-  },
-  {
-    id: uuidv4(),
-    name: "Editing task",
-    createdAt: 5,
-    completed: false,
-  },
-  {
-    id: uuidv4(),
-    name: "Active task",
-    createdAt: 5,
-    completed: false,
-  },
-];
+import INITIAL_TASKS from "./db/initial_tasks";
 
 function App() {
   const [tasks, setTasks] = useState(INITIAL_TASKS);
   const [filterTask, setFilterTask] = useState("all");
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/todos")
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch(
+          "https://jsonplaceholder.typicode.com/todos"
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
         const firstTenTasks = data.slice(0, 7);
         const transformedTasks = firstTenTasks.map((todo) => ({
           id: todo.id.toString(),
@@ -42,8 +27,11 @@ function App() {
           createdAt: Date.now(),
         }));
         setTasks(transformedTasks);
-      })
-      .catch((error) => console.error("Error fetching tasks:", error));
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+    fetchTasks();
   }, []);
 
   const saveTaskDataHandler = (task) => {
@@ -53,28 +41,22 @@ function App() {
   };
 
   const updateTask = (id, newName) => {
-    setTasks(
-      tasks.map((task) => {
-        if (task.id === id) {
-          return { ...task, name: newName };
-        }
-        return task;
-      })
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === id ? { ...task, name: newName } : task
+      )
     );
   };
 
   const deleteTaskName = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id));
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
   };
 
   const statusTask = (id) => {
-    setTasks(
-      tasks.map((task) => {
-        if (task.id === id) {
-          return { ...task, completed: !task.completed };
-        }
-        return task;
-      })
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
     );
   };
 

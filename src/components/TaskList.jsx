@@ -1,4 +1,5 @@
 import Task from "./Task";
+import PropTypes from "prop-types";
 
 const TaskList = ({ tasks, onUpdateTask, onDeleteTaskName, onStatusTask }) => {
   return (
@@ -16,5 +17,10 @@ const TaskList = ({ tasks, onUpdateTask, onDeleteTaskName, onStatusTask }) => {
     </ul>
   );
 };
-
+TaskList.propTypes = {
+  tasks: PropTypes.array.isRequired,
+  onUpdateTask: PropTypes.func.isRequired,
+  onDeleteTaskName: PropTypes.func.isRequired,
+  onStatusTask: PropTypes.func.isRequired,
+};
 export default TaskList;

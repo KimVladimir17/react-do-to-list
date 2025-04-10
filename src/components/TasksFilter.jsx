@@ -1,12 +1,9 @@
+import PropTypes from "prop-types";
+import { BUTTONS } from "../constants.js/constants";
 const TasksFilter = ({ filter, onFilterChange }) => {
-  const buttons = [
-    { name: "All", filterValue: "all" },
-    { name: "Active", filterValue: "active" },
-    { name: "Completed", filterValue: "completed" },
-  ];
   return (
     <ul className="filters">
-      {buttons.map(({ name, filterValue }) => (
+      {BUTTONS.map(({ name, filterValue }) => (
         <li key={filterValue}>
           <button
             className={filter === filterValue ? "selected" : ""}
@@ -18,6 +15,11 @@ const TasksFilter = ({ filter, onFilterChange }) => {
       ))}
     </ul>
   );
+};
+
+TasksFilter.propTypes = {
+  filter: PropTypes.array.isRequired,
+  onFilterChange: PropTypes.func.isRequired,
 };
 
 export default TasksFilter;

@@ -1,4 +1,5 @@
 import TasksFilter from "./TasksFilter";
+import PropTypes from "prop-types";
 
 const Footer = ({ tasks, filter, onFilterChange, onClearCompleted }) => {
   const itemsLeft = tasks.filter((task) => !task.completed).length;
@@ -14,6 +15,12 @@ const Footer = ({ tasks, filter, onFilterChange, onClearCompleted }) => {
       </button>
     </footer>
   );
+};
+Footer.propTypes = {
+  tasks: PropTypes.array.isRequired,
+  filter: PropTypes.array.isRequired,
+  onFilterChange: PropTypes.func.isRequired,
+  onClearCompleted: PropTypes.func.isRequired,
 };
 
 export default Footer;

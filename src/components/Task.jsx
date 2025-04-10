@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { formatDistanceToNow } from "date-fns";
+import PropTypes from "prop-types";
+
 const Task = ({
   task,
   onUpdateTask,
@@ -77,6 +79,13 @@ const Task = ({
       )}
     </li>
   );
+};
+Task.propTypes = {
+  task: PropTypes.array.isRequired,
+  onUpdateTask: PropTypes.func.isRequired,
+  onDeleteTaskName: PropTypes.func.isRequired,
+  onStatusTask: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default Task;
